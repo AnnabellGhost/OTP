@@ -21,7 +21,7 @@ class Otp extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>OTP Demo</h2>
         </div>
-        <Sms defaultV='Hey' />
+        <Sms />
         {this.state.showPicCode?<PicCode />:null}
         <button onSubmit={this.handleOtpSubmit}>Submit</button>
         {/*this button should belongs to parent comp of Sms Or cb with a url of picCode*/}

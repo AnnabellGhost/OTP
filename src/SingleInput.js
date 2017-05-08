@@ -1,7 +1,9 @@
 /*Created by Zhang Xingping on 20170507*/
 import React,{PropTypes} from 'react';
+import InputError from './InputError.js';
 function SingleInput({...props}){
 // class SingleInput extends React.Component{
+    console.log(props.showError);
     return(
         <div>
             <input 
@@ -16,7 +18,7 @@ function SingleInput({...props}){
                 onFocus={props.controlFocus}
                 readOnly={props.onlyRead?props.onlyRead:false}
             />
-            {/*<InputError display={props.showError&&props.errorText!=''}/>*/}
+            <InputError display={props.showError&&props.errorText!=''}/>
         </div>
     );
 }

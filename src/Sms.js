@@ -4,11 +4,12 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import SingleInput from './SingleInput.js';
-import {run,validationRules} from './runValidation.js'
-/*const inputValidation=[
-    validationRule('smsValue','SMS',required),
-    validationRule('picCodeValue','PicCode',required),
-];*/
+import {run,validateRules} from './runValidation.js';
+import {required,lengthMustBe} from './rules.js';
+const inputValidation=[
+    validateRules('smsValue','SMS',lengthMustBe(4)),
+    // validateRules('picCodeValue','PicCode',lengthMustBe(4)),
+];
 class Sms extends Component{
     constructor(props){
         super(props);
@@ -20,27 +21,32 @@ class Sms extends Component{
             showPicCode:true,
         };
         this.handleSmsInput=this.handleSmsInput.bind(this);
-        this.handleInputFocus=this.handleInputFocus.bind(this);
+        this.handleInputBlur=this.handleInputBlur.bind(this);
+        this.state.validationErrors=run(this.state,inputValidation);
     }
     handleSmsInput(e){
         console.log(e.target.name+' is '+e.target.value);
-        e.target.name==='sms'?this.setState({smsValue:e.target.value}):null;
         //dispatch action to change the SMS userinput
         /*set validation errors that run(); returns */
-
+        let newState=Object.assign({},this.state,{smsValue:e.target.value});
+        newState.validationErrors=run(newState,inputValidation);
+        this.setState(newState);
     }
-    handleInputFocus(e){
-        console.log('focus');
+    handleInputBlur(e){
+        console.log('blur');
+        this.setState({showError:true});
     }
     render(){
         return(
             <div>
                 <SingleInput
-                    name='sms'
+                    name='smsValue'
                     inputType='text'
                     content={this.state.smsValue}
                     controlFunc={e=>this.handleSmsInput(e)}
-                    controlFocus={e=>this.handleInputFocus(e)}
+                    controlBlur={e=>this.handleInputBlur(e)}
+                    showError={this.state.showError}
+                    errorText={this.state.validationErrors.smsValue}
                 />
             </div>
         );
