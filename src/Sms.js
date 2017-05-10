@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 import SingleInput from './SingleInput.js';
 import {run,validateRules} from './runValidation.js';
 import {required,lengthMustBe} from './rules.js';
+import {recordSMS,sendSMS} from './actions/otpAction.js';
 const inputValidation=[
     validateRules('smsValue','SMS',lengthMustBe(4)),
     // validateRules('picCodeValue','PicCode',lengthMustBe(4)),
@@ -21,22 +22,31 @@ class Sms extends Component{
             showPicCode:true,
         };
         this.handleSmsInput=this.handleSmsInput.bind(this);
-        this.handleInputBlur=this.handleInputBlur.bind(this);
+        this.handleSendSms=this.handleSendSms.bind(this);
         this.state.validationErrors=run(this.state,inputValidation);
     }
     handleSmsInput(e){
         console.log(e.target.name+' is '+e.target.value);
-        //dispatch action to change the SMS userinput
         /*set validation errors that run(); returns */
         let newState=Object.assign({},this.state,{smsValue:e.target.value});
         newState.validationErrors=run(newState,inputValidation);
         this.setState(newState);
+        //dispatch action to change the SMS userinput
+        this.props.recordSMS(e.target.value);
+    }
+    componentDidUpdate(){
+        
+    }
+    handleSendSms(){
+        //When Clicked,dispatch action to send SMS
+        this.props.sendSMS();
     }
     handleInputBlur(e){
-        console.log('blur');
-        this.setState({showError:true});
+        // console.log(this.props.recordSMS);
+        // this.setState({showError:true});
     }
     render(){
+        // console.log(this.state.validationErrors.smsValue);
         return(
             <div>
                 <SingleInput
@@ -48,9 +58,16 @@ class Sms extends Component{
                     showError={this.state.showError}
                     errorText={this.state.validationErrors.smsValue}
                 />
+                <button onClick={this.handleSendSms}>Submit</button>
             </div>
         );
     }
 }
-
-export default Sms;
+// recordSMS
+function mapDispatchToProps(dispatch) {
+  return {
+    recordSMS: bindActionCreators(recordSMS, dispatch),
+    sendSMS:bindActionCreators(sendSMS, dispatch),
+  };
+};
+export default connect(null,mapDispatchToProps)(Sms);

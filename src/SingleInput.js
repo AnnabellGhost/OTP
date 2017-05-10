@@ -2,8 +2,7 @@
 import React,{PropTypes} from 'react';
 import InputError from './InputError.js';
 function SingleInput({...props}){
-// class SingleInput extends React.Component{
-    console.log(props.showError);
+    console.log(props.errorText);
     return(
         <div>
             <input 
@@ -18,8 +17,9 @@ function SingleInput({...props}){
                 onFocus={props.controlFocus}
                 readOnly={props.onlyRead?props.onlyRead:false}
             />
-            <InputError display={props.showError&&props.errorText!=''}/>
+            <InputError errorText={props.errorText}/>
         </div>
+        // display={props.showError&&props.errorText!=''} 
     );
 }
 /*SingleInput.propTypes={

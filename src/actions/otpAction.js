@@ -6,7 +6,7 @@ function shouldSendSms(state) {
 	}
 	return true;
 }
-export function sendSMS(params) {
+/*export function sendSMS(payload) {
     return async(dispatch, getState) => {
 		//verify
 		if (!shouldSendSms(getState())) {
@@ -26,6 +26,34 @@ export function sendSMS(params) {
 			type: 'SEND_SMS',
 			payload
 		});
+	}
+}*/
+export function sendSMS(payload) {
+	return {
+		type:'SEND_SMS',
+		payload:{
+			resultCode:'1181',
+			captchaUrl:'./image/captcha.jpg',
+		}
+	}
+}
+export function recordSMS(SmsInput) {
+    return {
+		type:'RECORD_SMS',
+		SmsInput,
+	}
+}
+export function recordPicCode(PicCode) {
+    return {
+		type:'RECORD_PIC_CODE',
+		PicCode,
+	}
+}
+export function verifyPicCode(PicCode){
+	//dispatch({type:});
+	return {
+		type:'VERIFY_PIC_CODE',
+
 	}
 }
 export function refreshCaptchaAction(params) {
