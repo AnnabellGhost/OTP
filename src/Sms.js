@@ -11,6 +11,10 @@ const inputValidation=[
     validateRules('smsValue','SMS',lengthMustBe(4)),
     // validateRules('picCodeValue','PicCode',lengthMustBe(4)),
 ];
+function isEmptyObject(e){
+    for(let t in e) return !1;
+    return !0;
+}
 class Sms extends Component{
     constructor(props){
         super(props);
@@ -28,14 +32,17 @@ class Sms extends Component{
     handleSmsInput(e){
         console.log(e.target.name+' is '+e.target.value);
         /*set validation errors that run(); returns */
+        this.props.recordSMS(e.target.value);
+        console.log(this.props.smsData);
         let newState=Object.assign({},this.state,{smsValue:e.target.value});
         newState.validationErrors=run(newState,inputValidation);
         this.setState(newState);
         //dispatch action to change the SMS userinput
-        this.props.recordSMS(e.target.value);
+        // isEmptyObject(newState.validationErrors)?this.props.recordSMS(e.target.value):null;
+        // this.props.recordSMS(e.target.value);
     }
     componentDidUpdate(){
-        
+        console.log("DidUpdata Sms ");
     }
     handleSendSms(){
         //When Clicked,dispatch action to send SMS
@@ -64,10 +71,15 @@ class Sms extends Component{
     }
 }
 // recordSMS
+function mapStateToProps(state) {
+  return {
+    smsData: state.otp.smsData,
+  };
+};
 function mapDispatchToProps(dispatch) {
   return {
     recordSMS: bindActionCreators(recordSMS, dispatch),
     sendSMS:bindActionCreators(sendSMS, dispatch),
   };
 };
-export default connect(null,mapDispatchToProps)(Sms);
+export default connect(mapStateToProps,mapDispatchToProps)(Sms);

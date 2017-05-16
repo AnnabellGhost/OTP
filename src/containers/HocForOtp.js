@@ -21,11 +21,14 @@ const HocForOtp =(WrappedComponent,dataSource)=>
                 data:dataSource,
             });
         }
+        /*proc(WrappedComponentInstanceFromCB){
+            WrappedComponentInstanceFromCB.WrappedComponentInstanceMethod();
+        }*/
         render(){
             console.log("this.props.smsData");
+            // const props=Object.assign({},this.props,{ref:this.proc.bind(this)});
             return(<WrappedComponent data={this.state.data} {...this.props} />);
         }
     }
 
 export default HocForOtp;
-// export default HocForOtp;

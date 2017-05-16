@@ -15,6 +15,7 @@ function SingleInput({...props}){
                 onChange={props.controlFunc}
                 onBlur={props.controlBlur}
                 onFocus={props.controlFocus}
+                onClick={props.controlClick}
                 readOnly={props.onlyRead?props.onlyRead:false}
             />
             <InputError errorText={props.errorText}/>

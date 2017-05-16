@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 class Otp extends Component {
   constructor(props){
     super(props);
-    this.state={
+    /*this.state={
       showPicCode:true,
-    }
+    }*/
     this.handleOtpSubmit=this.handleOtpSubmit.bind(this);
   }
   handleOtpSubmit(){
@@ -23,7 +23,7 @@ class Otp extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Demo By zxp</h2>
         </div>
-        <Sms />
+        <Sms defaultV='Deposit' />
         {
           this.props.smsData.smsResultCode==='1181'?
           <PicCode 

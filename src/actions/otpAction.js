@@ -28,7 +28,7 @@ function shouldSendSms(state) {
 		});
 	}
 }*/
-export function sendSMS(payload) {
+export function sendSMS() {
 	return {
 		type:'SEND_SMS',
 		payload:{
@@ -49,12 +49,29 @@ export function recordPicCode(PicCode) {
 		PicCode,
 	}
 }
-export function verifyPicCode(PicCode){
+export function verifyPicCode(PicCode){//accesable via getState ...Do i really need this param?
+	return (dispatch, getState)=>{
+		dispatch({type:'VERIFY_PIC_CODE',PicCodePass:getState().otp.smsData.picCodeUserInput==='0225'});
+		getState().otp.smsData.PicCodePass?dispatch(sendSMS()):null;//else dispatch REFRESHPICCODE
+	}
+	
+	
+	/*return async (dispatch,getState)=>{
+		// dispatch({type:'IS_VERIFYING_PIC_CODE'});
+		
+		const response= await fetch ('/../api/PicCodeVerifyResult.json');//params
+		const data= await response.json();
+		if(data.resultCode==='1000'){
+			sendSMS();
+		}else{
+			alert("verifyPicCode Fail");
+		}
+	}*/
 	//dispatch({type:});
-	return {
+	/*return {
 		type:'VERIFY_PIC_CODE',
 
-	}
+	}*/
 }
 export function refreshCaptchaAction(params) {
     return (dispatch)=>{

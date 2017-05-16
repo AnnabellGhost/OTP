@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import SingleInput from './SingleInput.js';
 import {run,validateRules} from './runValidation.js';
 import {required,lengthMustBe} from './rules.js';
-import {recordPicCode} from './actions/otpAction.js';
+import {recordPicCode,verifyPicCode} from './actions/otpAction.js';
 const inputValidation=[
     validateRules('picCodeValue','PicCode',required,lengthMustBe(4)),
 ];
@@ -18,6 +18,7 @@ class PicCode extends Component{
             validationErrors:{},
         };
         this.handlePicCodeInput=this.handlePicCodeInput.bind(this);
+        this.handlePicCodeSubmit=this.handlePicCodeSubmit.bind(this);
     }
     handlePicCodeInput(e){
         console.log(e.target.value);
@@ -27,6 +28,11 @@ class PicCode extends Component{
         this.setState(newState);
         //dispatch action to change the SMS userinput
         this.props.recordPicCode(e.target.value);
+        // verifyPicCode
+    }
+    handlePicCodeSubmit(){
+        console.log("handlePicCodeSubmit "+this.state.picCodeValue);
+        this.props.verifyPicCode(this.state.picCodeValue);
     }
     render(){
         return(
@@ -39,7 +45,7 @@ class PicCode extends Component{
                     errorText={this.state.validationErrors.picCodeValue}
                 />
                 <img src={this.props.picCodeUrl}/>
-                <button>SubmitPicCode</button>
+                <button onClick={this.handlePicCodeSubmit}>SubmitPicCode</button>
             </div>
         );
     }
@@ -47,6 +53,7 @@ class PicCode extends Component{
 function mapDispatchToProps(dispatch) {
   return {
     recordPicCode: bindActionCreators(recordPicCode, dispatch),
+    verifyPicCode: bindActionCreators(verifyPicCode, dispatch),
   };
 };
 export default connect(null,mapDispatchToProps)(PicCode);

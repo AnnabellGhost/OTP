@@ -1,5 +1,4 @@
 /*Created by Zhang Xingping on 20170508*/
-import { combineReducers } from 'redux'
 const initalState = {
     smsData:{
         isSendingSms:false,
@@ -7,6 +6,7 @@ const initalState = {
         captchaUrl:'./images/a.jpg',
         picCodeUserInput:'',
         smsUserInput:'',
+        PicCodePass:false,
     }
 };
 function otp(state = initalState, action){
@@ -38,7 +38,15 @@ function otp(state = initalState, action){
                         picCodeUserInput:action.PicCode,
                     }
             });
+        case 'VERIFY_PIC_CODE':
+            return Object.assign({},state,{
+                    smsData:{
+                        ...state.smsData,
+                        PicCodePass:action.PicCodePass,
+                    }
+        });
         case 'REFRESH_CAPTCHAS':
+        //reset PicCodePass=false
             return Object.assign({},state,{
                 smsData:{
                     ...state.smsData,
@@ -49,5 +57,5 @@ function otp(state = initalState, action){
           return state;
     }
 }
-const reducers=combineReducers({otp});
-export default reducers;
+
+export default otp;
