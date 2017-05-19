@@ -20,7 +20,6 @@ var store=createStore(reducers,applyMiddleware(thunk,logger));
 // const OTP=HocForOtp(Otp);
 render(
     <Provider store={store}>
-      
       <Otp />
     </Provider>,
     document.getElementById('root')

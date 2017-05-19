@@ -53,7 +53,7 @@ class Sms extends Component{
         // this.setState({showError:true});
     }
     render(){
-        // console.log(this.state.validationErrors.smsValue);
+        console.log(this.state.validationErrors.smsValue);
         return(
             <div>
                 <SingleInput

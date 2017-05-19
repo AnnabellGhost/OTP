@@ -28,6 +28,15 @@ function shouldSendSms(state) {
 		});
 	}
 }*/
+export function submitOTP(){
+	// console.debug(state);
+	return (dispatch,getState)=>{
+		console.warn(getState());
+		return dispatch({type:'SUBMIT_OTP',});
+		
+		// state:getState().otp,
+	}
+}
 export function sendSMS() {
 	return {
 		type:'SEND_SMS',

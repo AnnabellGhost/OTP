@@ -3,13 +3,15 @@ const initalState = {
     isfetchingTransIn:false,
     planName:'',
     bankCardNo:'',
-    amount:'',
+    deposite:'',
     frequnency:'',
     date:'',
     validationToken:''
 };
 function transin(state = initalState, action){
    switch(action.type){
+    case 'UPDATE_USER_INPUT':
+        return Object.assign({},state,{...action.payload});
     case 'GET_PLAN_DETAIL':
         return Object.assign({},state,{...action.payload});
     case 'EDIT_PLAN_NAME':

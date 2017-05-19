@@ -11,6 +11,8 @@ const initalState = {
 };
 function otp(state = initalState, action){
     switch (action.type) {
+        case 'SUBMIT_OTP':
+            return state;
         case 'RECORD_SMS':
             return Object.assign({},state,{
                     smsData:{

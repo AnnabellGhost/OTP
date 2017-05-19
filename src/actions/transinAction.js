@@ -13,24 +13,14 @@ export function editPlanName(planNameUserInput){
         
     }
 }
-
+export function updateUserInput(whichOne,userInput){
+    return {
+        type:'UPDATE_USER_INPUT',
+        payload:{[whichOne]:userInput},
+    }
+}
 /*payload:{
         planName:'Deposite ',
         bankCardNo:'123456789',
         amount:'2500',
     }*/
-export function getJobs(){
-    return async(dispatch,getState)=>{
-        const response=await fetch('http://codepen.io/jobs.json',{
-                header:{
-                    'Access-Control-Allow-Origin':'*',
-                }
-        });
-        const data=await response.json();
-        return dispatch({
-            type:'FETCH_JOB_INFO',
-            jobs:data.jobs,
-        });
-        
-    }
-}
