@@ -3,12 +3,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getPlanDetail,editPlanName,updateUserInput} from '../actions/transinAction.js';
+import BankCardList from './BankCardList.js';
 import SingleInput from '../SingleInput.js';
 import Button from '../components/ButtonTest.js'
 
 class TransIn extends Component{
     constructor(props){
         super(props);
+        console.warn("In constructor!");
         this.state={
             /*make it controlled By Store*/
             // planNameUserInput:props.planName,
@@ -16,6 +18,7 @@ class TransIn extends Component{
             validationErrors:{},
             showbankSub:false,
             selectList:false,
+            listType:'all',
         };
         this.handleTransinInput=this.handleTransinInput.bind(this);
         this.handleTransinClick=this.handleTransinClick.bind(this);
@@ -42,18 +45,28 @@ class TransIn extends Component{
     handleRenderList(){
         this.setState({selectList:!this.state.selectList});
     }
+    handleBankCardSelection(e){
+        // console.log(e);/*Mysterious*/
+        this.setState({listType:e.target.value});
+    }
     componentDidMount(){
         this.props.getPlanDetail();
     }
     render(){
-        // console.log(this.props.jobs);
-        // return this.state.selectList? <i>List</i>:
         return(
-            this.state.selectList? 
-            <Button 
-              onClick={this.handleRenderList.bind(this)}
-              ButtonName='RenderSomeList'
-            />
+            this.state.selectList?
+            <div>
+                <BankCardList condition={this.state.listType}/> 
+                <Button 
+                    onClick={this.handleRenderList.bind(this)}
+                    ButtonName='RenderSomeList'
+                />
+                <select onChange={(e)=>this.handleBankCardSelection(e)} defaultValue='Please select a name'>
+                    <option value="all">All</option>
+                    <option value="mine">Mine</option>
+                    <option value="others">Others</option>
+                </select>
+            </div>
             :
             <div>
                 <SingleInput

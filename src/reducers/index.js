@@ -2,5 +2,6 @@
 import { combineReducers } from 'redux';
 import otp from './otpReducer.js';
 import transin from './transinReducer.js';
-const reducers=combineReducers({otp,transin});
+import bankcards from './bankcardReducer.js';
+const reducers=combineReducers({otp,transin,bankcards});
 export default reducers;
